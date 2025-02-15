@@ -1,15 +1,25 @@
-// /
-//
-//
-//
-//
-//
 import React, { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod"; // Ensure this import is correct
+import { z } from "zod"; // Import Zod
 import axios from "axios";
 import { Button, Input, Modal } from "antd";
 import { toast } from "react-toastify";
+
+// Define the Zod schema for the form data
+const userSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  surname: z.string().min(1, "Surname is required"),
+  country: z.string().min(1, "Country is required"),
+  town: z.string().min(1, "Town/City is required"),
+  Stateadress: z.string().min(1, "State Address is required"),
+  extra: z.string().optional(),
+  state: z.string().min(1, "State is required"),
+  Zip: z.string().min(1, "Zip is required"),
+  email: z.string().email("Invalid email address"),
+  number: z.string().min(1, "Phone number is required"),
+});
 
 const User = () => {
   const navigate = useNavigate();
@@ -26,7 +36,9 @@ const User = () => {
     register,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(userSchema), // Integrate Zod with react-hook-form
+  });
 
   useEffect(() => {
     if (!UserData) {
@@ -239,6 +251,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Name"
               />
+              {errors.name && (
+                <p className="text-red-500 text-sm">{errors.name.message}</p>
+              )}
             </div>
             <div className="mb-5 w-full">
               <label
@@ -253,6 +268,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Surname"
               />
+              {errors.surname && (
+                <p className="text-red-500 text-sm">{errors.surname.message}</p>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-10">
@@ -269,6 +287,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Country"
               />
+              {errors.country && (
+                <p className="text-red-500 text-sm">{errors.country.message}</p>
+              )}
             </div>
             <div className="mb-5 w-full">
               <label
@@ -283,6 +304,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Town or City"
               />
+              {errors.town && (
+                <p className="text-red-500 text-sm">{errors.town.message}</p>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-10">
@@ -299,6 +323,11 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="State Address"
               />
+              {errors.Stateadress && (
+                <p className="text-red-500 text-sm">
+                  {errors.Stateadress.message}
+                </p>
+              )}
             </div>
             <div className="mb-5 w-full">
               <label
@@ -313,6 +342,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Extra Address"
               />
+              {errors.extra && (
+                <p className="text-red-500 text-sm">{errors.extra.message}</p>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-10">
@@ -329,6 +361,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your State"
               />
+              {errors.state && (
+                <p className="text-red-500 text-sm">{errors.state.message}</p>
+              )}
             </div>
             <div className="mb-5 w-full">
               <label
@@ -343,6 +378,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Zip Address"
               />
+              {errors.Zip && (
+                <p className="text-red-500 text-sm">{errors.Zip.message}</p>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-10">
@@ -359,6 +397,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Email"
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
             </div>
             <div className="mb-5 w-full">
               <label
@@ -373,6 +414,9 @@ const User = () => {
                 className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="Your Number"
               />
+              {errors.number && (
+                <p className="text-red-500 text-sm">{errors.number.message}</p>
+              )}
             </div>
           </div>
           <button
