@@ -33,11 +33,11 @@ const Register = () => {
       ),
     password: z
       .string()
-      .min(8, "Minimum Value is 8")
-      .max(16, "Maximum value is 16")
+      .min(5, "Minimum Value is 5")
+      .max(20, "Maximum value is 20")
       .refine(
         (value) =>
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+          /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d{0,3})[A-Za-z\d@$!%*?&]{5,20}$/.test(
             value
           ),
         {
